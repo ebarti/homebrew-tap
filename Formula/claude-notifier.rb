@@ -1,20 +1,18 @@
 class ClaudeNotifier < Formula
   desc "Native macOS notifications with the Claude logo for Claude Code"
   homepage "https://github.com/ebarti/claude-notifier"
-  url "https://github.com/ebarti/claude-notifier/archive/refs/tags/v1.0.0.tar.gz"
-  sha256 "82a102538f7372f9ef8d8ac6399e12d10b9fde57455e3d0ecc872ac8977cb657"
+  url "https://github.com/ebarti/claude-notifier/releases/download/v1.0.0/claude-notifier-1.0.0-macos.tar.gz"
+  sha256 "c71e5fb4e63843ecbe5dfa47971122de9759c4d23b8febd07df89571694d2128"
   license "MIT"
 
   depends_on :macos
 
   def install
-    system "make", "build"
-    prefix.install "build/ClaudeNotifier.app"
+    prefix.install "ClaudeNotifier.app"
     bin.install_symlink prefix/"ClaudeNotifier.app/Contents/MacOS/claude-notifier"
   end
 
   def post_install
-    # Register with Launch Services so macOS picks up the icon
     system "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister",
            "-f", prefix/"ClaudeNotifier.app"
   end
