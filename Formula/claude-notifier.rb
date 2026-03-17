@@ -1,8 +1,8 @@
 class ClaudeNotifier < Formula
   desc "Native macOS notifications with the Claude logo for Claude Code"
   homepage "https://github.com/ebarti/claude-notifier"
-  url "https://github.com/ebarti/claude-notifier/releases/download/v1.0.0/claude-notifier-1.0.0-macos.tar.gz"
-  sha256 "74aa2a6b09818e1d841096564a644a170ea5fcb1a81a7f29079989430ec1188b"
+  url "https://github.com/ebarti/claude-notifier/releases/download/v1.1.0/claude-notifier-1.1.0-macos.tar.gz"
+  sha256 "4417a166727cfdc5694648e7ac760f889775fd3476947e1a7637aafa4cf407a9"
   license "MIT"
 
   depends_on :macos
