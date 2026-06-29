@@ -1,8 +1,8 @@
 class Skills < Formula
   desc "Agent skills distilled from technical books, for Claude/Codex/Gemini/Antigravity"
   homepage "https://github.com/ebarti/skills"
-  url "https://github.com/ebarti/skills/archive/refs/tags/v1.0.0.tar.gz"
-  sha256 "75b2939db4c6e5b180f5f5c830d5d28a5477e3eff5a0cefa8f4d0ab556e1bb3f"
+  url "https://github.com/ebarti/skills/archive/refs/tags/v1.0.1.tar.gz"
+  sha256 "66b054ad2c58492f4a7550e58dbb7a3665e0ca47fbd5bbfdee527cb4d407f30a"
   license "MIT"
 
   def install
