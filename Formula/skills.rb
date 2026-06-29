@@ -3,6 +3,7 @@ class Skills < Formula
   homepage "https://github.com/ebarti/skills"
   url "https://github.com/ebarti/skills/archive/refs/tags/v1.0.0.tar.gz"
   sha256 "75b2939db4c6e5b180f5f5c830d5d28a5477e3eff5a0cefa8f4d0ab556e1bb3f"
+  license "MIT"
 
   def install
     # Keep the skill folders + installer at a stable Homebrew path; `brew upgrade`
