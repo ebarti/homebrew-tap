@@ -18,6 +18,7 @@ class Jobctrl < Formula
   #   sha256 "<sha256 of that tarball>"
   head "https://github.com/ebarti/JobCtrl.git", branch: "main"
 
+  depends_on "corepack"
   depends_on "git"
   depends_on "node"
   depends_on "poppler"
