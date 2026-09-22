@@ -10,17 +10,17 @@ class Jobctrl < Formula
   desc "Local-first job search mission control: discover, score, tailor, apply"
   homepage "https://jobctrl.dev"
 
-  url "https://releases.jobctrl.dev/v1/artifacts/0.2.0-6a82c233c434e67f0a2d1c6df3db6aa68d036b75-darwin-arm64/jobctrl-0.2.0-darwin-arm64.zip"
-  version "0.2.0"
-  sha256 "809569b51e59188b581d5e8435dbd33107e324dbce2a6b6e66bde4de91d591bf"
+  url "https://releases.jobctrl.dev/v1/artifacts/0.2.1-b52b2ef13ace10672dbf225dea32a2b19c0b67f6-darwin-arm64/jobctrl-0.2.1-darwin-arm64.zip"
+  version "0.2.1"
+  sha256 "4b9ed82dd6000dbf1f6e6b72485e539ae6896cf448102bb8ef81f49f25803b30"
   license "AGPL-3.0-only"
   version_scheme 1
 
-  JOBCTRL_BUILD_ID = "0.2.0-6a82c233c434e67f0a2d1c6df3db6aa68d036b75-darwin-arm64"
-  JOBCTRL_MANIFEST_SHA256 = "dbc309dbe685face916ed7ccc6385c3649f745f94956aae17ddb60907183bc8a"
-  JOBCTRL_DESCRIPTOR_URL = "https://releases.jobctrl.dev/v1/artifacts/0.2.0-6a82c233c434e67f0a2d1c6df3db6aa68d036b75-darwin-arm64/release-descriptor.json"
-  JOBCTRL_DESCRIPTOR_SHA256 = "10c46daeeba865d0dccd351040da8b8a1b71e3eb6fd9d6fd09cc9d4703eae770"
-  JOBCTRL_SIGNATURE_SHA256 = "00b32cf0d39fd35b6103e6b1120a6a89aa2af2b43a143c53982ca9762e5522d0"
+  JOBCTRL_BUILD_ID = "0.2.1-b52b2ef13ace10672dbf225dea32a2b19c0b67f6-darwin-arm64"
+  JOBCTRL_MANIFEST_SHA256 = "f77bb2fa18dcfc068a5658f58afd84812c7b87f495d12472eb8074fa1b69828a"
+  JOBCTRL_DESCRIPTOR_URL = "https://releases.jobctrl.dev/v1/artifacts/0.2.1-b52b2ef13ace10672dbf225dea32a2b19c0b67f6-darwin-arm64/release-descriptor.json"
+  JOBCTRL_DESCRIPTOR_SHA256 = "2dd29867dd8ab89ab06aa208997154aecbeed507a8ca1dca5f8c4a4ee0035a37"
+  JOBCTRL_SIGNATURE_SHA256 = "b4a9b1be071a77e7df053d395a0d0f6b27f4c0e7843d23732540c333c98ad92a"
 
   resource "jobctrl-release-descriptor" do
     url JOBCTRL_DESCRIPTOR_URL
