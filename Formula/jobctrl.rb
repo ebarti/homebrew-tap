@@ -10,17 +10,20 @@ class Jobctrl < Formula
   desc "Local-first job search mission control: discover, score, tailor, apply"
   homepage "https://jobctrl.dev"
 
-  url "https://releases.jobctrl.dev/v1/artifacts/0.3.0-945ac2fdf3aa3428ad84bca9e70688443f2de04f-darwin-arm64/jobctrl-0.3.0-darwin-arm64.zip"
-  version "0.3.0"
-  sha256 "dcc322e1e54e60a862a2ad4b41706e75c66ef307f93daed0e10851d23aa800b4"
+  url "https://releases.jobctrl.dev/v1/artifacts/0.3.1-dfa5a3e8e56a01ed54a6035f777aa9cb00dbea5e-darwin-arm64/jobctrl-0.3.1-darwin-arm64.zip"
+  version "0.3.1"
+  sha256 "67b1490c8092c70213717f015fc4ce78d627f0f738d460fc67c49647197aee02"
   license "AGPL-3.0-only"
   version_scheme 1
 
-  JOBCTRL_BUILD_ID = "0.3.0-945ac2fdf3aa3428ad84bca9e70688443f2de04f-darwin-arm64"
-  JOBCTRL_MANIFEST_SHA256 = "46e84d6ac4944afcad8ebf7cd831a426ce46430176494b0492787662057c63ac"
-  JOBCTRL_DESCRIPTOR_URL = "https://releases.jobctrl.dev/v1/artifacts/0.3.0-945ac2fdf3aa3428ad84bca9e70688443f2de04f-darwin-arm64/release-descriptor.json"
-  JOBCTRL_DESCRIPTOR_SHA256 = "5c3e59910c0d14989449a0e256f119092dbebce6785f29acd765eecfad8b422f"
-  JOBCTRL_SIGNATURE_SHA256 = "b265bf7c6887d7e54e71ccd75f9bbf46e18e8e4e5455ce91c83ab2743d882806"
+  JOBCTRL_BUILD_ID = "0.3.1-dfa5a3e8e56a01ed54a6035f777aa9cb00dbea5e-darwin-arm64"
+  JOBCTRL_MANIFEST_SHA256 = "1e1deb7f7545b40bda58f73324a6d429e0c14bc4356198fe362b18da722cee0c"
+  JOBCTRL_DESCRIPTOR_URL = "https://releases.jobctrl.dev/v1/artifacts/0.3.1-dfa5a3e8e56a01ed54a6035f777aa9cb00dbea5e-darwin-arm64/release-descriptor.json"
+  JOBCTRL_DESCRIPTOR_SHA256 = "be3bceccdefcafb474aeaef574f4d11043dddbe2d75babc94e719f55d9be638a"
+  JOBCTRL_SIGNATURE_SHA256 = "6184e4a88a09ccb0f61cf0dd48ea9b3066babb3f177a84214409fceed8a8f9ef"
+  DEVELOPER_ID_REQUIREMENT = "anchor apple generic " \
+                             "and certificate 1[field.1.2.840.113635.100.6.2.6] exists " \
+                             "and certificate leaf[field.1.2.840.113635.100.6.1.13] exists"
 
   resource "jobctrl-release-descriptor" do
     url JOBCTRL_DESCRIPTOR_URL
@@ -32,46 +35,17 @@ class Jobctrl < Formula
     sha256 JOBCTRL_SIGNATURE_SHA256
   end
 
-  def verify_notarized_app!(bundle)
-    codesign_output, codesign_status = Open3.capture2e(
-      "/usr/bin/codesign",
-      "--verify",
-      "--deep",
-      "--strict",
-      "--check-notarization",
-      "-R=notarized",
-      "--verbose=2",
-      bundle.to_s,
-    )
-    unless codesign_status.success?
-      odie "JobCtrl release signature verification failed for #{bundle}: #{codesign_output}"
-    end
-
-    gatekeeper_output, gatekeeper_status = Open3.capture2e(
-      "/usr/sbin/spctl",
-      "--assess",
-      "--type",
-      "execute",
-      "--verbose=4",
-      bundle.to_s,
-    )
-    if !gatekeeper_status.success? || gatekeeper_output.exclude?("source=Notarized Developer ID")
-      odie "JobCtrl release is not Gatekeeper-notarized for #{bundle}: #{gatekeeper_output}"
-    end
-  end
-
-  def verify_notarized_executable!(executable)
+  def verify_developer_id_executable!(executable)
     codesign_output, codesign_status = Open3.capture2e(
       "/usr/bin/codesign",
       "--verify",
       "--strict",
-      "--check-notarization",
-      "-R=notarized",
+      "-R=#{DEVELOPER_ID_REQUIREMENT}",
       "--verbose=2",
       executable.to_s,
     )
     unless codesign_status.success?
-      odie "JobCtrl release executable signature verification failed for #{executable}: #{codesign_output}"
+      odie "JobCtrl Developer ID signature verification failed for #{executable}: #{codesign_output}"
     end
   end
 
@@ -87,9 +61,13 @@ class Jobctrl < Formula
     # libexec/bootstrap is a native bootstrap, not the runtime selector: on its first
     # normal-user invocation it authenticates these resources into the user
     # store, then re-execs that stable selector.
-    verify_notarized_executable!(buildpath/"launcher/jobctrl")
-    verify_notarized_executable!(buildpath/"launcher/jobctrl-installer")
-    verify_notarized_executable!(managed_headless_shell)
+    # Apple's live notarization service is unavailable in Homebrew's sandbox.
+    # Require a strict Developer ID signature here; the normal-user bootstrap
+    # checks notarization before running its installer, which verifies the full
+    # payload before activation. Homebrew's sandbox remains unchanged.
+    verify_developer_id_executable!(buildpath/"launcher/jobctrl")
+    verify_developer_id_executable!(buildpath/"launcher/jobctrl-installer")
+    verify_developer_id_executable!(managed_headless_shell)
     bootstrap = libexec/"bootstrap"
     bootstrap.install buildpath/"launcher/jobctrl"
     bootstrap.install buildpath/"launcher/jobctrl-installer"
