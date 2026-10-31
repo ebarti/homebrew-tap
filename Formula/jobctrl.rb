@@ -10,17 +10,17 @@ class Jobctrl < Formula
   desc "Local-first job search mission control: discover, score, tailor, apply"
   homepage "https://jobctrl.dev"
 
-  url "https://releases.jobctrl.dev/v1/artifacts/0.3.1-dfa5a3e8e56a01ed54a6035f777aa9cb00dbea5e-darwin-arm64/jobctrl-0.3.1-darwin-arm64.zip"
-  version "0.3.1"
-  sha256 "67b1490c8092c70213717f015fc4ce78d627f0f738d460fc67c49647197aee02"
+  url "https://releases.jobctrl.dev/v1/artifacts/0.4.2-3087fd5dc8e4f7eb2a2a5d1d95a3a01db0978b28-darwin-arm64/jobctrl-0.4.2-darwin-arm64.zip"
+  version "0.4.2"
+  sha256 "1e8958447f6124184792191ad357b016fc43454bc0909f8a56a3bc2b2531eb9c"
   license "AGPL-3.0-only"
   version_scheme 1
 
-  JOBCTRL_BUILD_ID = "0.3.1-dfa5a3e8e56a01ed54a6035f777aa9cb00dbea5e-darwin-arm64"
-  JOBCTRL_MANIFEST_SHA256 = "1e1deb7f7545b40bda58f73324a6d429e0c14bc4356198fe362b18da722cee0c"
-  JOBCTRL_DESCRIPTOR_URL = "https://releases.jobctrl.dev/v1/artifacts/0.3.1-dfa5a3e8e56a01ed54a6035f777aa9cb00dbea5e-darwin-arm64/release-descriptor.json"
-  JOBCTRL_DESCRIPTOR_SHA256 = "be3bceccdefcafb474aeaef574f4d11043dddbe2d75babc94e719f55d9be638a"
-  JOBCTRL_SIGNATURE_SHA256 = "6184e4a88a09ccb0f61cf0dd48ea9b3066babb3f177a84214409fceed8a8f9ef"
+  JOBCTRL_BUILD_ID = "0.4.2-3087fd5dc8e4f7eb2a2a5d1d95a3a01db0978b28-darwin-arm64"
+  JOBCTRL_MANIFEST_SHA256 = "3a71d9274eaed82fe80b7d1cce3114f70eca53ac85e0d4218e6c585d7c7581a1"
+  JOBCTRL_DESCRIPTOR_URL = "https://releases.jobctrl.dev/v1/artifacts/0.4.2-3087fd5dc8e4f7eb2a2a5d1d95a3a01db0978b28-darwin-arm64/release-descriptor.json"
+  JOBCTRL_DESCRIPTOR_SHA256 = "12be3b23a440e618ee02b6ff1d25d3193a6f3aa978e643f000672c9aeb6c87fc"
+  JOBCTRL_SIGNATURE_SHA256 = "2a7ce7fd9c40cdf93b1466674df1e9ef35099201205f1f5fe1bc0952f4db051d"
   DEVELOPER_ID_REQUIREMENT = "anchor apple generic " \
                              "and certificate 1[field.1.2.840.113635.100.6.2.6] exists " \
                              "and certificate leaf[field.1.2.840.113635.100.6.1.13] exists"
@@ -95,6 +95,15 @@ class Jobctrl < Formula
   end
 
   def caveats
+    upgrade_warning = if ["0.4.0", "0.4.1", "0.4.2"].include?(version.to_s)
+      <<~EOS
+        Upgrades from normally used JobCtrl 0.3.1 workspaces are currently
+        blocked because earlier child processes cannot be verified as stopped.
+        The previous workspace and installation records are preserved. The
+        new Homebrew command cannot start that workspace; keep the registry and
+        databases intact and see https://jobctrl.dev/user/getting-started#update-roll-back-or-remove-jobctrl
+      EOS
+    end
     <<~EOS
       JobCtrl #{version} (#{JOBCTRL_BUILD_ID}) uses the same signed ZIP and
       manifest as the curl channel. It has no Homebrew dependencies and no
@@ -102,6 +111,7 @@ class Jobctrl < Formula
       Temporal, and one managed core Chromium; Git, Corepack, uv, Poppler, and
       system Chrome are not required unless you explicitly enable an
       authenticated-browser capability.
+      #{upgrade_warning}
     EOS
   end
 
