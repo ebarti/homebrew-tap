@@ -10,17 +10,17 @@ class Jobctrl < Formula
   desc "Local-first job search mission control: discover, score, tailor, apply"
   homepage "https://jobctrl.dev"
 
-  url "https://releases.jobctrl.dev/v1/artifacts/0.4.2-3087fd5dc8e4f7eb2a2a5d1d95a3a01db0978b28-darwin-arm64/jobctrl-0.4.2-darwin-arm64.zip"
-  version "0.4.2"
-  sha256 "1e8958447f6124184792191ad357b016fc43454bc0909f8a56a3bc2b2531eb9c"
+  url "https://releases.jobctrl.dev/v1/artifacts/0.4.0-92c13276ac980135785a3348433a539a42d01258-darwin-arm64/jobctrl-0.4.0-darwin-arm64.zip"
+  version "0.4.0"
+  sha256 "09348b2ee76c0754477ea9ba8ee3c0a90bd6440877ba0c19382793f38f41db0a"
   license "AGPL-3.0-only"
-  version_scheme 1
+  version_scheme 2
 
-  JOBCTRL_BUILD_ID = "0.4.2-3087fd5dc8e4f7eb2a2a5d1d95a3a01db0978b28-darwin-arm64"
-  JOBCTRL_MANIFEST_SHA256 = "3a71d9274eaed82fe80b7d1cce3114f70eca53ac85e0d4218e6c585d7c7581a1"
-  JOBCTRL_DESCRIPTOR_URL = "https://releases.jobctrl.dev/v1/artifacts/0.4.2-3087fd5dc8e4f7eb2a2a5d1d95a3a01db0978b28-darwin-arm64/release-descriptor.json"
-  JOBCTRL_DESCRIPTOR_SHA256 = "12be3b23a440e618ee02b6ff1d25d3193a6f3aa978e643f000672c9aeb6c87fc"
-  JOBCTRL_SIGNATURE_SHA256 = "2a7ce7fd9c40cdf93b1466674df1e9ef35099201205f1f5fe1bc0952f4db051d"
+  JOBCTRL_BUILD_ID = "0.4.0-92c13276ac980135785a3348433a539a42d01258-darwin-arm64"
+  JOBCTRL_MANIFEST_SHA256 = "80ec1dba8372a09949be83c2e0ff7a36c63fc5205d7c1d459cc9db38943b0f61"
+  JOBCTRL_DESCRIPTOR_URL = "https://releases.jobctrl.dev/v1/artifacts/0.4.0-92c13276ac980135785a3348433a539a42d01258-darwin-arm64/release-descriptor.json"
+  JOBCTRL_DESCRIPTOR_SHA256 = "a942910e127e792d30a03efc5d6817195c9a7715799e6713b4505f4eaea887e1"
+  JOBCTRL_SIGNATURE_SHA256 = "be1eebf798210ccb59f74c1322ced20915c6c79bd30dc84f1ae5378acaeb875e"
   DEVELOPER_ID_REQUIREMENT = "anchor apple generic " \
                              "and certificate 1[field.1.2.840.113635.100.6.2.6] exists " \
                              "and certificate leaf[field.1.2.840.113635.100.6.1.13] exists"
@@ -95,7 +95,7 @@ class Jobctrl < Formula
   end
 
   def caveats
-    upgrade_warning = if ["0.4.0", "0.4.1", "0.4.2"].include?(version.to_s)
+    upgrade_warning = if ["0.4.0", "0.4.1"].include?(version.to_s)
       <<~EOS
         Upgrades from normally used JobCtrl 0.3.1 workspaces are currently
         blocked because earlier child processes cannot be verified as stopped.
